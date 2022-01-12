@@ -28,9 +28,8 @@ const Row = styled.div`
 `
 
 export default function FormComponent() {
-    const [viewType , setViewType ] = React.useState("EDIT")
-    const [currentInnerView , changeCurrentInnerView ] = React.useState(0)
-    console.log(currentInnerView)
+    const [viewType, setViewType] = React.useState("EDIT")
+    const [currentInnerView, changeCurrentInnerView] = React.useState(0)
     const [formData, setFormData] = React.useState([
         {
             label: "",
@@ -76,7 +75,7 @@ export default function FormComponent() {
         setFormData([...newData])
     }
 
-    const changeInnerValues = (e, innerIndex, index, field) => {
+    const changeInnerValues = (e: EventListenerObject, innerIndex : Number, index: Number, field: string) => {
         let value = e.target.value;
         let newData = formData;
         if (field === "value")
@@ -84,15 +83,26 @@ export default function FormComponent() {
         else
             newData[index].multiOptions[innerIndex].label = value;
         setFormData([...newData])
-        console.log(formData)
     }
 
-    const addInnerItem = (index) => {
+    const addInnerItem = (index: Number) => {
         let newFormData = formData;
         let newData = formData[index].multiOptions;
         newData = [...newData, { label: "", value: "" }];
         newFormData[index].multiOptions = newData;
         setFormData([...newFormData])
+    }
+
+    const submitForm = () => {
+        let flag = true;
+        formData.forEach((data) => {
+            if (data.label === "" || data.option === "")
+                flag = false;
+        })
+        if (flag)
+            setViewType("VIEW");
+        else
+            window.alert("Please fill empty fields or remove them")
     }
 
     return (
@@ -134,7 +144,7 @@ export default function FormComponent() {
                                     <DeleteOutlinedIcon onClick={() => removeRow(index)} sx={{ m: 1 }} />
                                 </Fab>
                             </Row>
-                            {currentInnerView===index && item.multiOptions[0] && item.option !== "" && item.multiOptions.map((innerItem, innerIndex) => (
+                            {currentInnerView === index && item.multiOptions[0] && item.option !== "" && item.multiOptions.map((innerItem, innerIndex) => (
                                 <Paper sx={{ m: 2, background: "#f0f0f0" }} key={innerIndex}>
                                     <Row>
                                         <TextField id="outlined-basic" label="Label" variant="outlined" value={innerItem.label} onChange={(e) => changeInnerValues(e, innerIndex, index, "label")} fullWidth sx={{ m: 1 }} />
@@ -154,13 +164,13 @@ export default function FormComponent() {
                         </>
                     ))}
                 </Paper>
-                <Button onClick={()=>setViewType("VIEW")} variant="contained" sx={{ m: 1 }} >Submit</Button>
+                <Button onClick={() => submitForm()} variant="contained" sx={{ m: 1 }} >Submit</Button>
             </Box>
-            }
+        }
 
             {
                 viewType === "VIEW" &&
-                <TableView formData={formData} changeView={setViewType}/>
+                <TableView formData={formData} changeView={setViewType} />
             }
         </>
     );
