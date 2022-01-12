@@ -1,3 +1,6 @@
+Note: I used my sister's device to create the task,
+Hence username of Auther differs.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
