@@ -149,7 +149,7 @@ export default function FormComponent() {
                             }
                             {index === (formData.length) - 1 &&
                                 <Row>
-                                    <Button variant="contained" sx={{ m: 1 }} onClick={() => addRow(index)}>Add</Button>
+                                    <Button variant="contained" sx={{ m: 1 }} onClick={() => addRow()}>Add</Button>
                                 </Row>}
                         </>
                     ))}
